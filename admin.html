@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — DARKLINE X FIESTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #7B2FFF; --purple-dim: #5a1fc0; --black: #060606; --black2: #0e0e0e; --white: #f0f0f0; --muted: #888; --green: #00c896; --red: #ff4757; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; min-height: 100vh; }
+    .login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .login-screen::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(123,47,255,0.08) 0%, transparent 70%); }
+    .login-box { background: var(--black2); border: 1px solid rgba(123,47,255,0.2); padding: 3rem; width: 100%; max-width: 420px; position: relative; z-index: 1; }
+    .login-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; margin-bottom: 2rem; }
+    .login-logo span { color: var(--purple); }
+    .login-box h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; }
+    .form-group input, .form-group select { width: 100%; background: var(--black); border: 1px solid rgba(123,47,255,0.2); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: 2px; outline: none; transition: border-color 0.25s; appearance: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--purple); }
+    .form-group select option { background: var(--black2); }
+    .btn-primary { width: 100%; background: var(--purple); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem; border: none; border-radius: 2px; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: var(--purple-dim); }
+    .login-error { color: var(--red); font-size: 0.82rem; margin-top: 0.8rem; display: none; }
+    .dashboard { display: none; min-height: 100vh; }
+    .dash-nav { background: rgba(6,6,6,0.95); border-bottom: 1px solid rgba(123,47,255,0.15); padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+    .dash-nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.1em; }
+    .dash-nav-logo span { color: var(--purple); }
+    .dash-nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .dash-role-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; background: rgba(123,47,255,0.15); border: 1px solid rgba(123,47,255,0.3); color: var(--purple); padding: 0.3rem 0.8rem; border-radius: 2px; }
+    .dash-user { font-size: 0.85rem; color: var(--muted); }
+    .btn-logout { background: none; border: 1px solid rgba(255,255,255,0.1); color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 0.9rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; }
+    .btn-logout:hover { border-color: var(--red); color: var(--red); }
+    .dash-body { padding: 2.5rem; }
+    .dash-header { margin-bottom: 2.5rem; border-bottom: 1px solid rgba(123,47,255,0.1); padding-bottom: 1.5rem; }
+    .dash-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; }
+    .dash-header p { color: var(--muted); font-size: 0.88rem; margin-top: 0.3rem; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; margin-bottom: 1.5rem; margin-top: 2.5rem; display: flex; align-items: center; gap: 1rem; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(123,47,255,0.15); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: rgba(123,47,255,0.08); border: 1px solid rgba(123,47,255,0.08); }
+    .stat-card { background: var(--black2); padding: 1.8rem; }
+    .stat-card-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+    .stat-card-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; color: var(--purple); }
+    .stat-card-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+    .tickets-table { width: 100%; border-collapse: collapse; }
+    .tickets-table th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--purple); text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid rgba(123,47,255,0.15); }
+    .tickets-table td { padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.88rem; }
+    .tickets-table tr:hover td { background: rgba(123,47,255,0.03); }
+    .badge { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 2px; }
+    .badge-vip { background: rgba(123,47,255,0.15); color: var(--purple); border: 1px solid rgba(123,47,255,0.3); }
+    .badge-reg { background: rgba(255,255,255,0.05); color: var(--muted); border: 1px solid rgba(255,255,255,0.1); }
+    .progress-bar { width: 80px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--purple); border-radius: 2px; }
+    .progress-fill.low { background: var(--red); }
+    .bookings-list { display: flex; flex-direction: column; gap: 1px; background: rgba(123,47,255,0.06); border: 1px solid rgba(123,47,255,0.06); }
+    .booking-item { background: var(--black2); padding: 1.2rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .booking-item:hover { background: #111; }
+    .booking-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.05em; font-size: 0.95rem; }
+    .booking-meta { color: var(--muted); font-size: 0.78rem; margin-top: 0.2rem; }
+    .booking-amount { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--green); white-space: nowrap; }
+    .empty-state { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.88rem; background: var(--black2); }
+    .info-card { background: var(--black2); border: 1px solid rgba(123,47,255,0.1); padding: 2rem; margin-bottom: 1px; }
+    .info-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+    .info-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+    .btn-seed { background: none; border: 1px solid rgba(123,47,255,0.3); color: var(--purple); font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.4rem 1rem; cursor: pointer; border-radius: 2px; transition: all 0.2s; margin-left: 1rem; }
+    .btn-seed:hover { background: rgba(123,47,255,0.1); }
+    @media (max-width: 768px) { .dash-body { padding: 1.5rem; } .dash-nav { padding: 0 1rem; } .dash-user { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo">DARK<span>LINE</span> × FIESTA</div>
+      <h2>TEAM LOGIN</h2>
+      <p>Authorised team members only.</p>
+      <div class="form-group">
+        <label>Your Name</label>
+        <select id="loginRole">
+          <option value="">— Select your name —</option>
+          <option value="warren">Warren — C.E.O</option>
+          <option value="saintvanta">Saint Vanta — Brand Manager</option>
+          <option value="ian">Ian — Event Organizer</option>
+          <option value="maina">Maina — Creative Director</option>
+          <option value="ashton">Ashton — Financial Manager</option>
+          <option value="clatt">Clatt — Merchandise Manager</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Access Dashboard</button>
+      <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+    </div>
+  </div>
+
+  <div class="dashboard" id="dashboard">
+    <nav class="dash-nav">
+      <div class="dash-nav-logo">DARK<span>LINE</span> × FIESTA</div>
+      <div class="dash-nav-right">
+        <span class="dash-user" id="dashUser"></span>
+        <span class="dash-role-badge" id="dashRole"></span>
+        <button class="btn-logout" onclick="doLogout()">Logout</button>
+      </div>
+    </nav>
+    <div class="dash-body">
+      <div class="dash-header">
+        <h1 id="dashWelcome"></h1>
+        <p id="dashSubtitle"></p>
+      </div>
+      <div id="dashContent"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue, get, set, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey:"AIzaSyAC2ctWv8fu06DNYFzeT76pote-KUFbxfA",
+      authDomain:"darkline-x-fiesta.firebaseapp.com",
+      projectId:"darkline-x-fiesta",
+      storageBucket:"darkline-x-fiesta.firebasestorage.app",
+      messagingSenderId:"22306597234",
+      appId:"1:22306597234:web:c11a440fff8b284d3795eb",
+      databaseURL:"https://darkline-x-fiesta-default-rtdb.firebaseio.com"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const CREDENTIALS = {
+      warren:     { password:"warren2026",  role:"CEO",                name:"Warren",      access:"all" },
+      saintvanta: { password:"vanta2026",   role:"Brand Manager",      name:"Saint Vanta", access:"brand" },
+      ian:        { password:"ian2026",      role:"Event Organizer",    name:"Ian",         access:"events" },
+      maina:      { password:"maina2026",   role:"Creative Director",  name:"Maina",       access:"creative" },
+      ashton:     { password:"ashton2026",  role:"Financial Manager",  name:"Ashton",      access:"finance" },
+      clatt:      { password:"clatt2026",   role:"Merch Manager",      name:"Clatt",       access:"merch" }
+    };
+
+    const ORDER = ['spectator','regular','vip','fullpack'];
+    let currentUser = null;
+    let unsubTickets = null;
+
+    window.doLogin = function() {
+      const key = document.getElementById('loginRole').value;
+      const pass = document.getElementById('loginPassword').value;
+      const err = document.getElementById('loginError');
+      if (!key) { err.style.display='block'; err.textContent='Please select your name.'; return; }
+      const cred = CREDENTIALS[key];
+      if (!cred || pass !== cred.password) { err.style.display='block'; err.textContent='Incorrect password. Try again.'; return; }
+      err.style.display='none';
+      currentUser = { ...cred, key };
+      showDashboard();
+    };
+
+    window.doLogout = function() {
+      currentUser = null;
+      document.getElementById('loginScreen').style.display='flex';
+      document.getElementById('dashboard').style.display='none';
+      document.getElementById('loginPassword').value='';
+      document.getElementById('loginRole').value='';
+    };
+
+    function showDashboard() {
+      document.getElementById('loginScreen').style.display='none';
+      document.getElementById('dashboard').style.display='block';
+      document.getElementById('dashUser').textContent = currentUser.name;
+      document.getElementById('dashRole').textContent = currentUser.role;
+      document.getElementById('dashWelcome').textContent = `WELCOME, ${currentUser.name.toUpperCase()}`;
+      const subtitles = {
+        all:      "Full access — you see everything.",
+        brand:    "Brand overview — event details and positioning.",
+        events:   "Event ops — live ticket availability and schedule.",
+        creative: "Creative overview — brand assets and design direction.",
+        finance:  "Finance — ticket sales, revenue, and bookings.",
+        merch:    "Merchandise — inventory planning and sales."
+      };
+      document.getElementById('dashSubtitle').textContent = subtitles[currentUser.access];
+      loadDashboard();
+    }
+
+    async function loadDashboard() {
+      const access = currentUser.access;
+      const content = document.getElementById('dashContent');
+
+      // Fetch tickets once for initial render
+      const ticketsSnap = await get(ref(db, 'tickets'));
+      const ticketsRaw = ticketsSnap.val() || {};
+      const tickets = ORDER.map(id => ({ id, ...ticketsRaw[id] })).filter(t => t.name);
+
+      const bookingsSnap = await get(ref(db, 'bookings'));
+      const bookingsRaw = bookingsSnap.val() || {};
+      const bookings = Object.values(bookingsRaw).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+      const totalSold = tickets.reduce((s,t) => s+(t.total-t.available),0);
+      const totalRevenue = tickets.reduce((s,t) => s+((t.total-t.available)*t.price),0);
+      const totalAvail = tickets.reduce((s,t) => s+t.available,0);
+      const totalCap = tickets.reduce((s,t) => s+t.total,0);
+
+      let html = '';
+
+      if (access === 'all') {
+        html += statsHTML([
+          {label:'Tickets Sold',value:totalSold,sub:`of ${totalCap} total`},
+          {label:'Revenue (KSH)',value:totalRevenue.toLocaleString(),sub:'from ticket sales'},
+          {label:'Tickets Left',value:totalAvail,sub:'still available'},
+          {label:'Bookings',value:bookings.length,sub:'total reservations'}
+        ]);
+        html += `<div class="section-title">Live Tickets <button class="btn-seed" onclick="seedTickets()">Reset Tickets</button></div>`;
+        html += ticketsTableHTML(tickets, false);
+        html += `<div class="section-title">All Bookings</div>` + bookingsHTML(bookings);
+        html += brandInfoHTML() + scheduleHTML() + merchHTML();
+      } else if (access === 'finance') {
+        html += statsHTML([
+          {label:'Total Revenue (KSH)',value:totalRevenue.toLocaleString(),sub:'from ticket sales'},
+          {label:'Tickets Sold',value:totalSold,sub:`of ${totalCap} capacity`},
+          {label:'Total Bookings',value:bookings.length,sub:'reservations made'},
+          {label:'Avg Ticket (KSH)',value:totalSold>0?Math.round(totalRevenue/totalSold).toLocaleString():'0',sub:'average per ticket'}
+        ]);
+        html += `<div class="section-title">Revenue by Ticket Type</div>` + ticketsTableHTML(tickets, true);
+        html += `<div class="section-title">All Bookings</div>` + bookingsHTML(bookings);
+      } else if (access === 'events') {
+        html += statsHTML([
+          {label:'Tickets Available',value:totalAvail,sub:`of ${totalCap} total`},
+          {label:'Tickets Sold',value:totalSold,sub:'reservations made'},
+          {label:'Event Date',value:'15.08',sub:'August 2026'},
+          {label:'Venue',value:'Arena One',sub:'Valley Arcade, Nairobi'}
+        ]);
+        html += `<div class="section-title">Live Ticket Availability</div>` + ticketsTableHTML(tickets, false);
+        html += `<div class="section-title">Event Schedule</div>` + scheduleHTML();
+      } else if (access === 'brand') {
+        html += statsHTML([
+          {label:'Event Date',value:'15.08',sub:'August 2026'},
+          {label:'Venue',value:'Arena One',sub:'Valley Arcade'},
+          {label:'Expected',value:'600+',sub:'attendees'},
+          {label:'Tickets Sold',value:totalSold,sub:'so far'}
+        ]);
+        html += brandInfoHTML();
+        html += `<div class="section-title">Ticket Overview</div>` + ticketsTableHTML(tickets, false);
+      } else if (access === 'creative') {
+        html += statsHTML([
+          {label:'Event Date',value:'15.08',sub:'August 2026'},
+          {label:'Venue',value:'Arena One',sub:'Valley Arcade'},
+          {label:'Brand',value:'DL×F',sub:'Darkline × Fiesta'},
+          {label:'Status',value:'LIVE',sub:'Tickets on sale'}
+        ]);
+        html += brandInfoHTML();
+        html += `<div class="section-title">Event Schedule</div>` + scheduleHTML();
+      } else if (access === 'merch') {
+        html += statsHTML([
+          {label:'Event Date',value:'15.08',sub:'August 2026'},
+          {label:'Merch Drops',value:'1',sub:'Event day drop'},
+          {label:'Attendees Est.',value:'600+',sub:'potential buyers'},
+          {label:'Status',value:'PLAN',sub:'Pre-event phase'}
+        ]);
+        html += merchHTML();
+        html += `<div class="section-title">Event Schedule</div>` + scheduleHTML();
+      }
+
+      content.innerHTML = html;
+
+      // Live ticket updates
+      onValue(ref(db, 'tickets'), snap => {
+        const raw = snap.val() || {};
+        const updated = ORDER.map(id => ({ id, ...raw[id] })).filter(t => t.name);
+        const tbody = document.getElementById('ticketsBody');
+        if (tbody) tbody.innerHTML = ticketsRowsHTML(updated, access==='finance');
+        // update first stat card live
+        const firstVal = document.querySelector('.stat-card-value');
+        if (firstVal) {
+          if (access==='finance') firstVal.textContent = updated.reduce((s,t)=>s+((t.total-t.available)*t.price),0).toLocaleString();
+          else if (access==='events') firstVal.textContent = updated.reduce((s,t)=>s+t.available,0);
+          else firstVal.textContent = updated.reduce((s,t)=>s+(t.total-t.available),0);
+        }
+      });
+    }
+
+    function statsHTML(stats) {
+      return `<div class="stats-grid">${stats.map(s=>`
+        <div class="stat-card">
+          <div class="stat-card-label">${s.label}</div>
+          <div class="stat-card-value">${s.value}</div>
+          <div class="stat-card-sub">${s.sub}</div>
+        </div>`).join('')}</div>`;
+    }
+
+    function ticketsTableHTML(tickets, showRevenue) {
+      return `<table class="tickets-table">
+        <thead><tr>
+          <th>Ticket</th><th>Type</th><th>Price</th>
+          ${showRevenue?'<th>Sold</th><th>Revenue</th>':'<th>Available</th><th>Sold</th>'}
+          <th>Progress</th>
+        </tr></thead>
+        <tbody id="ticketsBody">${ticketsRowsHTML(tickets, showRevenue)}</tbody>
+      </table>`;
+    }
+
+    function ticketsRowsHTML(tickets, showRevenue) {
+      return tickets.map(t => {
+        const sold = t.total - t.available;
+        const pct = Math.round((t.available/t.total)*100);
+        const isVip = t.type==='VIP'||t.type==='Full Pack';
+        const low = pct < 20;
+        return `<tr>
+          <td><strong>${t.name}</strong></td>
+          <td><span class="badge ${isVip?'badge-vip':'badge-reg'}">${t.type}</span></td>
+          <td>KSH ${t.price.toLocaleString()}</td>
+          ${showRevenue
+            ?`<td style="color:var(--green)">${sold}</td><td style="color:var(--green)">KSH ${(sold*t.price).toLocaleString()}</td>`
+            :`<td>${t.available}/${t.total}</td><td style="color:var(--green)">${sold}</td>`}
+          <td><div class="progress-bar"><div class="progress-fill ${low?'low':''}" style="width:${pct}%"></div></div></td>
+        </tr>`;
+      }).join('');
+    }
+
+    function bookingsHTML(bookings) {
+      if (!bookings.length) return '<div class="empty-state">No bookings yet. They appear here in real time.</div>';
+      return `<div class="bookings-list">${bookings.slice(0,30).map(b=>`
+        <div class="booking-item">
+          <div>
+            <div class="booking-name">${b.customerName||'Anonymous'}</div>
+            <div class="booking-meta">${b.ticketName} · x${b.quantity} · ${b.customerPhone||''} · ${new Date(b.timestamp).toLocaleString()}</div>
+          </div>
+          <div class="booking-amount">KSH ${(b.total||0).toLocaleString()}</div>
+        </div>`).join('')}</div>`;
+    }
+
+    function brandInfoHTML() {
+      return `<div class="section-title">Brand Info</div>
+      <div class="info-card" style="margin-bottom:1px"><h3>DARKLINE PARTY</h3><p>Nairobi's underground nightlife collective. Rooftop experiences, curated sounds, and a community that takes the night seriously.</p></div>
+      <div class="info-card" style="margin-bottom:1px"><h3>FOOTWORK FIESTA</h3><p>Nairobi's grassroots football tournament. Competitive brackets, real teams, real stakes.</p></div>
+      <div class="info-card"><h3>EVENT DETAILS</h3><p>📅 15 August 2026 &nbsp;|&nbsp; 📍 Arena One, Valley Arcade, Nairobi<br>🕐 Tournament 12PM–7PM &nbsp;|&nbsp; 🎧 Afterparty 8PM–Late</p></div>`;
+    }
+
+    function scheduleHTML() {
+      const items = [
+        ['12:00 PM','Gates Open — Tournament Begins','Footwork Fiesta kicks off.'],
+        ['3:00 PM','Quarter Finals','Top teams battle it out.'],
+        ['5:30 PM','Semi Finals & Prize Ceremony','Finals + awards.'],
+        ['7:00 PM','Transition — Darkline Setup','Venue transforms.'],
+        ['8:00 PM','Darkline Party — Doors Open','DJ takes the booth. Rooftop opens.'],
+        ['Late Night','The Night Never Ends','VIP lounge, pool tables, non-stop music.']
+      ];
+      return `<div style="border:1px solid rgba(123,47,255,0.1)">${items.map(([time,title,desc])=>`
+        <div class="booking-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple)">${time}</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.04em">${title}</div>
+          <div style="font-size:0.82rem;color:var(--muted)">${desc}</div>
+        </div>`).join('')}</div>`;
+    }
+
+    function merchHTML() {
+      return `<div class="section-title">Merchandise</div>
+      <div class="info-card" style="margin-bottom:1px"><h3>EVENT DAY DROP</h3><p>Plan your merchandise for 15 August 2026. With 600+ attendees, coordinate with Warren on budget and Maina on design.</p></div>
+      <div class="info-card"><h3>SUGGESTED ITEMS</h3><p>T-Shirts · Caps · Wristbands · Lanyards · Limited Edition Prints</p></div>`;
+    }
+
+    window.seedTickets = async function() {
+      const tickets = {
+        spectator:{name:'Fiesta Spectator',type:'Individual',price:350,total:100,available:100,perks:{0:'Tournament access all day',1:'Cheer on your favourite team',2:'General seating area'}},
+        regular:  {name:'Darkline Regular',type:'Individual',price:800,total:150,available:150,perks:{0:'Afterparty entry from 8 PM',1:'Dance floor access',2:'Bar access'}},
+        vip:      {name:'Darkline V.I.P',type:'VIP',price:1500,total:40,available:40,perks:{0:'Panoramic rooftop access',1:'DJ booth proximity',2:'Reserved seating',3:'Exclusive pool table'}},
+        fullpack: {name:'Full-Pack VIP',type:'Full Pack',price:1800,total:40,available:40,perks:{0:'Tournament + afterparty',1:'All VIP privileges',2:'Rooftop + reserved seating',3:'The complete experience'}}
+      };
+      await set(ref(db,'tickets'), tickets);
+      alert('✅ Tickets reset in Firebase!');
+    };
+
+    document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key==='Enter') window.doLogin(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — DARKLINE X FIESTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #7B2FFF; --purple-dim: #5a1fc0; --black: #060606; --black2: #0e0e0e; --white: #f0f0f0; --muted: #888; --nav-h: 72px; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; z-index: 100; background: rgba(6,6,6,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(123,47,255,0.15); transition: background 0.3s; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+    .nav-wordmark span { color: var(--purple); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a { text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    nav ul a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--purple); transform: scaleX(0); transition: transform 0.25s; }
+    nav ul a:hover, nav ul a.active { color: var(--white); }
+    nav ul a:hover::after, nav ul a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--purple); color: #fff !important; padding: 0.45rem 1.25rem; border-radius: 2px; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--purple-dim) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--white); }
+    .page-header { padding: var(--nav-h) 3rem 4rem; position: relative; overflow: hidden; border-bottom: 1px solid rgba(123,47,255,0.12); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(123,47,255,0.12) 0%, transparent 70%); }
+    .page-header-inner { position: relative; z-index: 1; padding-top: 3rem; }
+    .page-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-label::before { content: ''; width: 40px; height: 1px; background: var(--purple); }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.92; letter-spacing: 0.03em; }
+    .page-header p { margin-top: 1.2rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; border-bottom: 1px solid rgba(123,47,255,0.12); }
+    .contact-info { padding: 5rem 3.5rem; border-right: 1px solid rgba(123,47,255,0.12); }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.2rem; }
+    .contact-info h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; margin-bottom: 2rem; line-height: 1; }
+    .contact-items { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon { width: 44px; height: 44px; background: rgba(123,47,255,0.1); border: 1px solid rgba(123,47,255,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.1rem; }
+    .contact-item-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+    .contact-item-value { font-size: 0.92rem; color: var(--white); line-height: 1.5; }
+    .contact-item-value a { color: var(--white); text-decoration: none; transition: color 0.2s; }
+    .contact-item-value a:hover { color: var(--purple); }
+    .social-row { display: flex; gap: 1rem; margin-top: 2.5rem; }
+    .social-btn { display: flex; align-items: center; gap: 0.6rem; background: rgba(123,47,255,0.08); border: 1px solid rgba(123,47,255,0.2); padding: 0.6rem 1.2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); text-decoration: none; transition: all 0.2s; border-radius: 2px; }
+    .social-btn:hover { background: rgba(123,47,255,0.2); border-color: rgba(123,47,255,0.5); }
+    .contact-form { padding: 5rem 3.5rem; }
+    .contact-form h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.04em; margin-bottom: 2rem; line-height: 1; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--black2); border: 1px solid rgba(123,47,255,0.2); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: 2px; outline: none; transition: border-color 0.25s; appearance: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--purple); }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-group select option { background: var(--black2); }
+    .btn-primary { display: inline-block; background: var(--purple); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border-radius: 2px; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; width: 100%; }
+    .btn-primary:hover { background: var(--purple-dim); transform: translateY(-2px); }
+    .form-success { display: none; text-align: center; padding: 3rem; border: 1px solid rgba(123,47,255,0.3); background: rgba(123,47,255,0.05); }
+    .form-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem; }
+    .form-success p { color: var(--muted); font-size: 0.88rem; }
+    .faq-section { padding: 5rem 3rem; border-bottom: 1px solid rgba(123,47,255,0.12); }
+    .faq-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem,3vw,2.8rem); letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(123,47,255,0.08); border: 1px solid rgba(123,47,255,0.08); }
+    .faq-item { background: var(--black2); padding: 2rem; cursor: pointer; transition: background 0.25s; }
+    .faq-item:hover { background: #111; }
+    .faq-question { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .faq-arrow { color: var(--purple); font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+    .faq-answer { font-size: 0.85rem; color: var(--muted); line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; }
+    .faq-item.open .faq-answer { max-height: 200px; padding-top: 1rem; }
+    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; }
+    .footer-logo span { color: var(--purple); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { opacity: 0; animation: fadeUp 0.6s forwards; }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; } nav ul { display: none; } .hamburger { display: flex; }
+      .page-header { padding: var(--nav-h) 1.5rem 3rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-info { border-right: none; border-bottom: 1px solid rgba(123,47,255,0.12); padding: 3rem 1.5rem; }
+      .contact-form { padding: 3rem 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .faq-section { padding: 3rem 1.5rem; }
+      .faq-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="darkline_purple.png" alt="Darkline Party Logo">
+      <span class="nav-wordmark">DARKLINE <span>×</span> FIESTA</span>
+    </a>
+    <ul>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contacts.html" class="active">Contact</a></li>
+      <li><a href="events.html" class="nav-cta">Get Tickets</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-label">Reach Out</div>
+      <h1>GET IN<br><span style="color:var(--purple)">TOUCH</span></h1>
+      <p>Questions about tickets, group bookings, partnerships or press — we're here.</p>
+    </div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info animate" style="animation-delay:0.1s">
+      <div class="section-label">Contact Info</div>
+      <h2>LET'S TALK<br>BUSINESS.</h2>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Venue</div>
+            <div class="contact-item-value">Arena One, Valley Arcade<br>Nairobi, Kenya</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📅</div>
+          <div>
+            <div class="contact-item-label">Event Date</div>
+            <div class="contact-item-value">15 August 2026<br>12:00 PM — Late Night</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:hello@darklinefiesta.co.ke">hello@darklinefiesta.co.ke</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-item-label">WhatsApp</div>
+            <div class="contact-item-value"><a href="https://wa.me/254700000000" target="_blank">+254 700 000 000</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="social-row">
+        <a href="https://www.instagram.com/darkline.ke" target="_blank" class="social-btn">📸 Darkline</a>
+        <a href="https://www.instagram.com/footworkfiesta26" target="_blank" class="social-btn">📸 Footwork Fiesta</a>
+        
+      </div>
+    </div>
+
+    <div class="contact-form animate" style="animation-delay:0.2s">
+      <h2>SEND A<br>MESSAGE.</h2>
+      <form id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" id="firstName" placeholder="John" required>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" id="lastName" placeholder="Doe" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="contactEmail" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Phone (optional)</label>
+          <input type="tel" id="contactPhone" placeholder="+254 7XX XXX XXX">
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select id="contactSubject">
+            <option>Ticket Enquiry</option>
+            <option>Group Booking (5+ people)</option>
+            <option>Sponsorship / Partnership</option>
+            <option>Press & Media</option>
+            <option>General Question</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="contactMessage" placeholder="Tell us what you need..." required></textarea>
+        </div>
+        <button type="button" class="btn-primary" onclick="submitContact()">Send Message</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <h3>MESSAGE SENT ✦</h3>
+        <p>We'll get back to you within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="faq-section">
+    <div class="section-label">Common Questions</div>
+    <h2>FAQ</h2>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-question">How do I buy tickets? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">Go to the Events page and click Pay with M-Pesa on your preferred ticket. You'll receive an STK Push on your phone to complete payment instantly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can I buy tickets at the gate? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">Yes, tickets will be available at the gate via M-Pesa. However we recommend buying in advance as tickets are limited and may sell out.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">What's included in VIP? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">VIP includes panoramic rooftop access, DJ booth proximity, reserved seating, and exclusive pool table access. Full-Pack VIP adds tournament access on top of everything.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is there parking at Arena One? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">Yes, Arena One at Valley Arcade has parking available. We recommend arriving early as spaces fill up fast for events of this size.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Can I get a refund? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">Tickets are non-refundable but are transferable. If you can't make it, you can transfer your ticket to someone else. Contact us for help.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">How do I book for a group? <span class="faq-arrow">+</span></div>
+        <div class="faq-answer">For groups of 5 or more, use the contact form above or WhatsApp us directly. We offer group packages and can arrange reserved areas for large groups.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">DARK<span>LINE</span> × FIESTA</div>
+    <p>© 2026 Darkline. All rights reserved.</p>
+    <nav class="footer-links">
+      <a href="events.html">Events</a>
+      <a href="team.html">Team</a>
+      <a href="about.html">About</a>
+      <a href="contacts.html">Contact</a>
+    </nav>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const app = initializeApp({
+      apiKey:"AIzaSyAC2ctWv8fu06DNYFzeT76pote-KUFbxfA",
+      authDomain:"darkline-x-fiesta.firebaseapp.com",
+      projectId:"darkline-x-fiesta",
+      storageBucket:"darkline-x-fiesta.firebasestorage.app",
+      messagingSenderId:"22306597234",
+      appId:"1:22306597234:web:c11a440fff8b284d3795eb",
+      databaseURL:"https://darkline-x-fiesta-default-rtdb.firebaseio.com"
+    });
+    const db = getDatabase(app);
+
+    window.submitContact = async function() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const phone = document.getElementById('contactPhone').value.trim();
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value.trim();
+      if (!firstName || !lastName) { alert('Please enter your full name.'); return; }
+      if (!email) { alert('Please enter your email.'); return; }
+      if (!message) { alert('Please enter a message.'); return; }
+      const btn = document.querySelector('#contactForm .btn-primary');
+      btn.textContent = 'Sending...'; btn.disabled = true;
+      try {
+        await push(ref(db, 'messages'), {
+          firstName, lastName, email, phone, subject, message,
+          timestamp: new Date().toISOString()
+        });
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } catch(e) {
+        alert('Could not send. Try WhatsApp instead.');
+        btn.textContent = 'Send Message'; btn.disabled = false;
+      }
+    };
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Navbar
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.style.background = window.scrollY > 60 ? 'rgba(6,6,6,0.97)' : 'rgba(6,6,6,0.85)'; });
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const ul = nav.querySelector('ul');
+      ul.style.cssText = ul.style.display === 'flex' ? '' : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:rgba(6,6,6,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(123,47,255,0.2);';
+    });
+    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; }); }, { threshold: 0.1 });
+    document.querySelectorAll('.animate').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+  </script>
+</body>
+</html>

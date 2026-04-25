@@ -1,0 +1,246 @@
+cat > ~/DARKLINE-X-FIESTA/team.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — DARKLINE X FIESTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #7B2FFF; --purple-dim: #5a1fc0; --black: #060606; --black2: #0e0e0e; --white: #f0f0f0; --muted: #888; --nav-h: 72px; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; z-index: 100; background: rgba(6,6,6,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(123,47,255,0.15); transition: background 0.3s; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+    .nav-wordmark span { color: var(--purple); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a { text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    nav ul a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--purple); transform: scaleX(0); transition: transform 0.25s; }
+    nav ul a:hover, nav ul a.active { color: var(--white); }
+    nav ul a:hover::after, nav ul a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--purple); color: #fff !important; padding: 0.45rem 1.25rem; border-radius: 2px; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--purple-dim) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--white); }
+
+    .page-header { padding: var(--nav-h) 3rem 4rem; position: relative; overflow: hidden; border-bottom: 1px solid rgba(123,47,255,0.12); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(123,47,255,0.12) 0%, transparent 70%); }
+    .page-header-inner { position: relative; z-index: 1; padding-top: 3rem; }
+    .page-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-label::before { content: ''; width: 40px; height: 1px; background: var(--purple); }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.92; letter-spacing: 0.03em; }
+    .page-header p { margin-top: 1.2rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
+
+    /* HIERARCHY */
+    .team-wrap { padding: 5rem 3rem; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 3rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::before { content: ''; width: 40px; height: 1px; background: var(--purple); }
+
+    /* TOP — CEO alone */
+    .tier { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .tier-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 1rem; }
+    .connector { width: 1px; height: 40px; background: rgba(123,47,255,0.3); margin: 0 auto 0; }
+    .connector-row { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    .connector-h { height: 1px; background: rgba(123,47,255,0.3); flex: 1; max-width: 600px; margin-top: 20px; }
+
+    /* MEMBER CARD */
+    .member {
+      background: var(--black2); border: 1px solid rgba(123,47,255,0.1);
+      padding: 2rem 1.8rem; width: 200px; cursor: pointer;
+      position: relative; overflow: hidden; transition: background 0.25s, border-color 0.25s;
+      text-align: center;
+    }
+    .member::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--purple); transform: scaleX(0); transition: transform 0.3s; }
+    .member:hover { background: #111; border-color: rgba(123,47,255,0.35); }
+    .member:hover::before { transform: scaleX(1); }
+    .member.ceo { border-color: rgba(123,47,255,0.4); width: 240px; }
+    .member.ceo::before { transform: scaleX(1); }
+    .member-avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, rgba(123,47,255,0.35), rgba(123,47,255,0.05)); border: 1px solid rgba(123,47,255,0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--purple); }
+    .member.ceo .member-avatar { width: 80px; height: 80px; font-size: 1.8rem; border-color: var(--purple); background: linear-gradient(135deg, rgba(123,47,255,0.5), rgba(123,47,255,0.1)); }
+    .member-role { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.4rem; }
+    .member-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.04em; }
+    .member.ceo .member-name { font-size: 1.6rem; }
+    .tap-hint { font-size: 0.65rem; color: rgba(136,136,136,0.5); margin-top: 0.5rem; letter-spacing: 0.1em; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 2rem; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--black2); border: 1px solid rgba(123,47,255,0.3); max-width: 480px; width: 100%; padding: 3rem; position: relative; transform: translateY(20px); transition: transform 0.3s; }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-close { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: none; color: var(--muted); font-size: 1.5rem; cursor: pointer; line-height: 1; }
+    .modal-close:hover { color: var(--white); }
+    .modal-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, rgba(123,47,255,0.4), rgba(123,47,255,0.05)); border: 1px solid rgba(123,47,255,0.4); display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--purple); margin-bottom: 1.5rem; }
+    .modal-role { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; }
+    .modal-name { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 0.04em; margin-bottom: 1.5rem; line-height: 1; }
+    .modal-divider { width: 40px; height: 1px; background: var(--purple); margin-bottom: 1.5rem; }
+    .modal-desc { color: var(--muted); font-size: 0.92rem; line-height: 1.8; }
+
+    .join-section { margin: 0 3rem 5rem; border: 1px solid rgba(123,47,255,0.2); padding: 3.5rem; background: var(--black2); position: relative; overflow: hidden; }
+    .join-section::before { content: 'JOIN'; position: absolute; right: -1rem; top: 50%; transform: translateY(-50%); font-family: 'Bebas Neue', sans-serif; font-size: 10rem; color: rgba(123,47,255,0.04); line-height: 1; pointer-events: none; }
+    .join-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3vw, 3rem); letter-spacing: 0.04em; margin-bottom: 1rem; }
+    .join-section p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; margin-bottom: 2rem; }
+    .btn-primary { display: inline-block; background: var(--purple); color: #fff; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border-radius: 2px; transition: background 0.2s, transform 0.15s; }
+    .btn-primary:hover { background: var(--purple-dim); transform: translateY(-2px); }
+    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; color: var(--white); }
+    .footer-logo span { color: var(--purple); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { opacity: 0; animation: fadeUp 0.6s forwards; }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; } nav ul { display: none; } .hamburger { display: flex; }
+      .page-header { padding: var(--nav-h) 1.5rem 3rem; }
+      .team-wrap { padding: 3rem 1.5rem; }
+      .member { width: 160px; } .member.ceo { width: 180px; }
+      .join-section { margin: 0 1.5rem 3rem; padding: 2rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; } .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="darkline_purple.png" alt="Darkline Party Logo">
+      <span class="nav-wordmark">DARKLINE <span>×</span> FIESTA</span>
+    </a>
+    <ul>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="team.html" class="active">Team</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contacts.html">Contact</a></li>
+      <li><a href="events.html" class="nav-cta">Get Tickets</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-label">The People Behind It</div>
+      <h1>OUR<br><span style="color:var(--purple)">TEAM</span></h1>
+      <p>Six people. One vision. Built to make 15 August 2026 a night Nairobi never forgets.</p>
+    </div>
+  </div>
+
+  <div class="team-wrap">
+    <div class="section-label">Leadership Hierarchy</div>
+
+    <!-- TIER 1: CEO -->
+    <div class="tier-label">Chief Executive</div>
+    <div class="tier">
+      <div class="member ceo animate" style="animation-delay:0.1s" data-name="Warren" data-role="Chief Executive Officer" data-initials="W" data-desc="Warren leads the entire DARKLINE × FIESTA operation. As CEO, he sets the vision, makes the final calls, and ensures both brands operate at the highest level. Every decision flows through Warren — from budget approvals to event strategy. The engine behind the machine.">
+        <div class="member-avatar">W</div>
+        <div class="member-role">C.E.O</div>
+        <div class="member-name">Warren</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <!-- TIER 2: Brand Manager + Event Organizer -->
+    <div class="tier-label">Senior Management</div>
+    <div class="tier">
+      <div class="member animate" style="animation-delay:0.2s" data-name="Saint Vanta" data-role="Brand Manager" data-initials="SV" data-desc="Saint Vanta owns the identity of DARKLINE × FIESTA. From how the brand looks, sounds, and feels — it all goes through him. He manages brand partnerships, maintains consistency across all channels, and makes sure DARKLINE is always positioned as a premium experience.">
+        <div class="member-avatar">SV</div>
+        <div class="member-role">Brand Manager</div>
+        <div class="member-name">Saint Vanta</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+      <div class="member animate" style="animation-delay:0.25s" data-name="Ian" data-role="Event Organizer" data-initials="I" data-desc="Ian is the one who makes the event actually happen. He coordinates venues, manages logistics, handles timelines, and ensures every moving part of the event is locked in. If something needs to be done on the ground, Ian is the person making it happen — from setup to breakdown.">
+        <div class="member-avatar">I</div>
+        <div class="member-role">Event Organizer</div>
+        <div class="member-name">Ian</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <!-- TIER 3: Creative + Finance + Merch -->
+    <div class="tier-label">Operations</div>
+    <div class="tier">
+      <div class="member animate" style="animation-delay:0.3s" data-name="Maina" data-role="Creative Director" data-initials="M" data-desc="Maina is the creative force behind everything visual at DARKLINE × FIESTA. Flyers, stage design, social media aesthetics, and the overall vibe — Maina shapes how the world sees us. He translates the brand vision into visuals that hit different.">
+        <div class="member-avatar">M</div>
+        <div class="member-role">Creative Director</div>
+        <div class="member-name">Maina</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+      <div class="member animate" style="animation-delay:0.35s" data-name="Ashton" data-role="Financial Manager" data-initials="A" data-desc="Ashton keeps the money right. He manages the event budget, tracks all income and expenses, handles M-Pesa collections, and makes sure every shilling is accounted for. Without Ashton, there's no event — he's the reason the lights stay on and the DJ gets paid.">
+        <div class="member-avatar">A</div>
+        <div class="member-role">Financial Manager</div>
+        <div class="member-name">Ashton</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+      <div class="member animate" style="animation-delay:0.4s" data-name="Clatt" data-role="Merchandise Manager" data-initials="C" data-desc="Clatt runs the merch game. From designing limited edition drops to managing inventory and sales on the day — Clatt makes sure DARKLINE × FIESTA fans leave with something to remember the night by. He turns the brand into something you can wear.">
+        <div class="member-avatar">C</div>
+        <div class="member-role">Merchandise Manager</div>
+        <div class="member-name">Clatt</div>
+        <div class="tap-hint">tap to learn more</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-avatar" id="modalAvatar"></div>
+      <div class="modal-role" id="modalRole"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+    </div>
+  </div>
+
+  <div class="join-section animate" style="animation-delay:0.2s">
+    <h2>THE TEAM IS SET.<br>THE NIGHT IS COMING.</h2>
+    <p>Six people building something Nairobi has never seen. 15 August 2026 — Arena One, Valley Arcade.</p>
+    <a href="events.html" class="btn-primary">Get Your Tickets</a>
+  </div>
+
+  <footer>
+    <div class="footer-logo">DARK<span>LINE</span> × FIESTA</div>
+    <p>© 2026 Darkline. All rights reserved.</p>
+    <nav class="footer-links">
+      <a href="events.html">Events</a><a href="team.html">Team</a><a href="about.html">About</a><a href="contacts.html">Contact</a>
+    </nav>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.style.background = window.scrollY > 60 ? 'rgba(6,6,6,0.97)' : 'rgba(6,6,6,0.85)'; });
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const ul = nav.querySelector('ul');
+      ul.style.cssText = ul.style.display === 'flex' ? '' : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:rgba(6,6,6,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(123,47,255,0.2);';
+    });
+
+    // Member modal
+    const overlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    document.querySelectorAll('.member').forEach(card => {
+      card.addEventListener('click', () => {
+        document.getElementById('modalAvatar').textContent = card.dataset.initials;
+        document.getElementById('modalRole').textContent = card.dataset.role;
+        document.getElementById('modalName').textContent = card.dataset.name;
+        document.getElementById('modalDesc').textContent = card.dataset.desc;
+        overlay.classList.add('open');
+      });
+    });
+    modalClose.addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.classList.remove('open'); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+
+    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; }); }, { threshold: 0.1 });
+    document.querySelectorAll('.animate').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+  </script>
+</body>
+</html>
+HTMLEOF

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events — DARKLINE X FIESTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --purple: #7B2FFF; --purple-dim: #5a1fc0; --black: #060606; --black2: #0e0e0e; --white: #f0f0f0; --muted: #888; --nav-h: 72px; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; z-index: 100; background: rgba(6,6,6,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(123,47,255,0.15); transition: background 0.3s; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+    .nav-wordmark span { color: var(--purple); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a { text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    nav ul a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--purple); transform: scaleX(0); transition: transform 0.25s; }
+    nav ul a:hover, nav ul a.active { color: var(--white); }
+    nav ul a:hover::after, nav ul a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--purple); color: #fff !important; padding: 0.45rem 1.25rem; border-radius: 2px; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--purple-dim) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--white); }
+    .page-header { padding: var(--nav-h) 3rem 4rem; position: relative; overflow: hidden; border-bottom: 1px solid rgba(123,47,255,0.12); }
+    .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 80% 50%, rgba(123,47,255,0.12) 0%, transparent 70%); }
+    .page-header-inner { position: relative; z-index: 1; padding-top: 3rem; }
+    .page-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-label::before { content: ''; width: 40px; height: 1px; background: var(--purple); }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.92; letter-spacing: 0.03em; }
+    .page-header p { margin-top: 1.2rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
+    .event-hero { margin: 3rem; background: var(--black2); border: 1px solid rgba(123,47,255,0.15); display: grid; grid-template-columns: 1fr 380px; position: relative; overflow: hidden; }
+    .event-hero::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--purple); }
+    .event-hero-info { padding: 3rem; }
+    .event-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); background: rgba(123,47,255,0.1); display: inline-block; padding: 0.3rem 0.8rem; margin-bottom: 1.5rem; }
+    .event-hero-info h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 3.5rem); letter-spacing: 0.04em; line-height: 1; margin-bottom: 1.5rem; }
+    .event-meta { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2rem; }
+    .event-meta-item { display: flex; align-items: center; gap: 0.8rem; font-size: 0.88rem; color: var(--muted); }
+    .event-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .event-hero-side { background: linear-gradient(135deg, rgba(123,47,255,0.15), rgba(123,47,255,0.03)); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; text-align: center; gap: 1rem; border-left: 1px solid rgba(123,47,255,0.1); }
+    .event-date-big { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; line-height: 1; }
+    .event-month { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); }
+    .event-countdown { margin-top: 1.5rem; display: flex; gap: 1.5rem; }
+    .count-block { text-align: center; }
+    .count-num { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1; }
+    .count-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .section { padding: 4rem 3rem; }
+    .section-header { margin-bottom: 2.5rem; }
+    .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 3vw, 2.8rem); letter-spacing: 0.04em; }
+    .section-header p { color: var(--muted); font-size: 0.9rem; margin-top: 0.5rem; }
+    .tickets-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: rgba(123,47,255,0.08); border: 1px solid rgba(123,47,255,0.08); }
+    .ticket { background: var(--black2); padding: 2.2rem 2rem; position: relative; overflow: hidden; transition: background 0.25s; }
+    .ticket::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--purple); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
+    .ticket:hover { background: #111; }
+    .ticket:hover::after { transform: scaleX(1); }
+    .ticket.vip { border: 1px solid rgba(123,47,255,0.3); }
+    .ticket.vip::after { transform: scaleX(1); }
+    .ticket.soldout { opacity: 0.5; pointer-events: none; }
+    .ticket-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; }
+    .ticket-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+    .ticket-perks { list-style: none; margin-bottom: 1.5rem; }
+    .ticket-perks li { font-size: 0.82rem; color: var(--muted); padding: 0.3rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.5rem; }
+    .ticket-perks li::before { content: '—'; color: var(--purple); font-size: 0.7rem; }
+    .ticket-footer { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 1.2rem; }
+    .ticket-price-big { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 1; }
+    .ticket-price-sub { font-size: 0.72rem; color: var(--muted); }
+    .ticket-spots { font-size: 0.72rem; color: var(--muted); text-align: right; }
+    .spots-bar { width: 60px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 0.3rem; overflow: hidden; }
+    .spots-fill { height: 100%; background: var(--purple); border-radius: 2px; transition: width 0.5s; }
+    .spots-fill.low { background: #ff4757; }
+    .btn-book { width: 100%; background: var(--purple); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.75rem; border: none; border-radius: 2px; cursor: pointer; transition: background 0.2s; }
+    .btn-book:hover { background: var(--purple-dim); }
+    .btn-book:disabled { background: var(--muted); cursor: not-allowed; }
+    .schedule { padding: 0 3rem 4rem; }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: rgba(123,47,255,0.2); }
+    .timeline-item { position: relative; padding: 1.5rem 0 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .timeline-item::before { content: ''; position: absolute; left: -4px; top: 2rem; width: 9px; height: 9px; border-radius: 50%; background: var(--purple); }
+    .timeline-time { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.3rem; }
+    .timeline-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .timeline-desc { font-size: 0.82rem; color: var(--muted); }
+    .btn-primary { display: inline-block; background: var(--purple); color: #fff; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border-radius: 2px; transition: background 0.2s, transform 0.15s; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--purple-dim); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; border: 1px solid rgba(123,47,255,0.4); color: var(--white); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border-radius: 2px; transition: border-color 0.2s, background 0.2s; }
+    .btn-outline:hover { border-color: var(--purple); background: rgba(123,47,255,0.08); }
+    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; }
+    .footer-logo span { color: var(--purple); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; padding: 2rem; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: var(--black2); border: 1px solid rgba(123,47,255,0.3); max-width: 440px; width: 100%; padding: 2.5rem; position: relative; transform: translateY(20px); transition: transform 0.3s; }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: var(--muted); font-size: 1.4rem; cursor: pointer; }
+    .modal-close:hover { color: var(--white); }
+    .modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+    .modal-price { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; color: var(--purple); margin-bottom: 1.5rem; }
+    .modal label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--purple); margin-bottom: 0.5rem; margin-top: 1rem; }
+    .modal input { width: 100%; background: var(--black); border: 1px solid rgba(123,47,255,0.2); color: var(--white); font-family: 'Barlow', sans-serif; font-size: 0.9rem; padding: 0.85rem 1rem; border-radius: 2px; outline: none; transition: border-color 0.25s; }
+    .modal input:focus { border-color: var(--purple); }
+    .modal-qty { display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; }
+    .qty-btn { width: 36px; height: 36px; background: rgba(123,47,255,0.1); border: 1px solid rgba(123,47,255,0.3); color: var(--white); font-size: 1.2rem; cursor: pointer; border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+    .qty-btn:hover { background: rgba(123,47,255,0.2); }
+    .qty-display { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; min-width: 30px; text-align: center; }
+    .modal-total { margin-top: 1.5rem; padding: 1rem; background: rgba(123,47,255,0.06); border: 1px solid rgba(123,47,255,0.12); display: flex; justify-content: space-between; align-items: center; }
+    .modal-total-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+    .modal-total-value { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--purple); }
+    .modal-note { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; line-height: 1.5; }
+    .modal-success { text-align: center; padding: 2rem 0; display: none; }
+    .modal-success h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--purple); margin-bottom: 0.5rem; }
+    .modal-success p { color: var(--muted); font-size: 0.88rem; line-height: 1.8; }
+    .mpesa-logo { font-family: 'Bebas Neue', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; color: #00c896; margin-top: 1rem; text-align:center; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { opacity: 0; animation: fadeUp 0.6s forwards; }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; } nav ul { display: none; } .hamburger { display: flex; }
+      .event-hero { grid-template-columns: 1fr; margin: 1.5rem; }
+      .event-hero-side { border-left: none; border-top: 1px solid rgba(123,47,255,0.1); }
+      .section { padding: 3rem 1.5rem; } .schedule { padding: 0 1.5rem 3rem; }
+      .page-header { padding: var(--nav-h) 1.5rem 3rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; } .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <img src="darkline_purple.png" alt="Darkline Party Logo">
+      <span class="nav-wordmark">DARKLINE <span>×</span> FIESTA</span>
+    </a>
+    <ul>
+      <li><a href="events.html" class="active">Events</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contacts.html">Contact</a></li>
+      <li><a href="events.html" class="nav-cta">Get Tickets</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-label">August 2026</div>
+      <h1>THE<br><span style="color:var(--purple)">EVENT</span></h1>
+      <p>One night. Two experiences. Nairobi's biggest fusion of sport and nightlife.</p>
+    </div>
+  </div>
+
+  <div class="event-hero animate" style="animation-delay:0.1s">
+    <div class="event-hero-info">
+      <div class="event-tag">⚡ Main Event — 15 August 2026</div>
+      <h2>DARKLINE × FIESTA<br>NAIROBI 2026</h2>
+      <div class="event-meta">
+        <div class="event-meta-item">📍 Arena One, Valley Arcade, Nairobi</div>
+        <div class="event-meta-item">🕐 Tournament from 12:00 PM · Afterparty from 8:00 PM</div>
+        <div class="event-meta-item">🎟️ 600+ Expected Attendees</div>
+        <div class="event-meta-item">🎧 Live DJ · Rooftop · Pool Table</div>
+      </div>
+      <div class="event-hero-actions">
+        <a href="#tickets" class="btn-primary">Get Tickets</a>
+        <a href="#schedule" class="btn-outline">View Schedule</a>
+      </div>
+    </div>
+    <div class="event-hero-side">
+      <div class="event-month">August</div>
+      <div class="event-date-big">15</div>
+      <div class="event-month">2026 · Nairobi</div>
+      <div class="event-countdown">
+        <div class="count-block"><div class="count-num" id="days">—</div><div class="count-label">Days</div></div>
+        <div class="count-block"><div class="count-num" id="hours">—</div><div class="count-label">Hrs</div></div>
+        <div class="count-block"><div class="count-num" id="mins">—</div><div class="count-label">Min</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="tickets">
+    <div class="section-header animate" style="animation-delay:0.2s">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--purple);margin-bottom:0.5rem;">Live Availability</div>
+      <h2>TICKET PACKAGES</h2>
+      <p>Tickets update in real time. Pay with M-Pesa instantly.</p>
+    </div>
+    <div class="tickets-grid" id="ticketsGrid">
+      <div style="padding:3rem;color:var(--muted);font-size:0.88rem;">Loading live ticket data...</div>
+    </div>
+    <div style="margin-top:2rem;text-align:center;">
+      <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;">Also available at the gate. Contact us for group bookings of 5+.</p>
+      <a href="contacts.html" class="btn-outline">Contact for Group Bookings</a>
+    </div>
+  </section>
+
+  <section class="schedule" id="schedule">
+    <div class="section-header animate" style="animation-delay:0.2s">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--purple);margin-bottom:0.5rem;">15 August 2026</div>
+      <h2>EVENT SCHEDULE</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-time">12:00 PM</div><div class="timeline-title">Gates Open — Tournament Begins</div><div class="timeline-desc">Footwork Fiesta tournament kicks off. Teams compete across multiple rounds.</div></div>
+      <div class="timeline-item"><div class="timeline-time">3:00 PM</div><div class="timeline-title">Quarter Finals</div><div class="timeline-desc">Top teams battle it out. The crowd picks their favourites.</div></div>
+      <div class="timeline-item"><div class="timeline-time">5:30 PM</div><div class="timeline-title">Semi Finals & Prize Ceremony</div><div class="timeline-desc">Finals showdown followed by awards for the top performing teams.</div></div>
+      <div class="timeline-item"><div class="timeline-time">7:00 PM</div><div class="timeline-title">Transition — Darkline Setup</div><div class="timeline-desc">Venue transforms. The night is just beginning.</div></div>
+      <div class="timeline-item"><div class="timeline-time">8:00 PM</div><div class="timeline-title">Darkline Party — Doors Open</div><div class="timeline-desc">DJ takes the booth. Rooftop opens. The afterparty is live.</div></div>
+      <div class="timeline-item"><div class="timeline-time">Late Night</div><div class="timeline-title">The Night Never Ends</div><div class="timeline-desc">VIP lounge, pool tables, and non-stop music until the early hours.</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">DARK<span>LINE</span> × FIESTA</div>
+    <p>© 2026 Darkline. All rights reserved.</p>
+    <nav class="footer-links">
+      <a href="events.html">Events</a><a href="team.html">Team</a><a href="about.html">About</a><a href="contacts.html">Contact</a>
+    </nav>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div id="modalForm">
+        <h3 id="modalTicketName">Ticket</h3>
+        <div class="modal-price" id="modalTicketPrice"></div>
+        <label>First Name</label>
+        <input type="text" id="bookingFirstName" placeholder="First name">
+        <label>Last Name</label>
+        <input type="text" id="bookingLastName" placeholder="Last name">
+        <label>M-Pesa Phone Number</label>
+        <input type="tel" id="bookingPhone" placeholder="07XX XXX XXX">
+        <label>Quantity</label>
+        <div class="modal-qty">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <div class="qty-display" id="qtyDisplay">1</div>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <div class="modal-total">
+          <div class="modal-total-label">Total</div>
+          <div class="modal-total-value" id="modalTotal">KSH 0</div>
+        </div>
+        <p class="modal-note">📱 An M-Pesa STK Push will be sent to your phone. Enter your PIN to complete payment.</p>
+        <button class="btn-primary" style="width:100%;margin-top:1.5rem;" id="payBtn" onclick="confirmBooking()">Pay with M-Pesa 📱</button>
+        <div class="mpesa-logo">Powered by Safaricom Daraja</div>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <h3>CHECK YOUR PHONE ✦</h3>
+        <p id="modalSuccessText">M-Pesa prompt sent!<br>Enter your PIN to confirm.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, onValue, get, set, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey:"AIzaSyAC2ctWv8fu06DNYFzeT76pote-KUFbxfA",
+      authDomain:"darkline-x-fiesta.firebaseapp.com",
+      projectId:"darkline-x-fiesta",
+      storageBucket:"darkline-x-fiesta.firebasestorage.app",
+      messagingSenderId:"22306597234",
+      appId:"1:22306597234:web:c11a440fff8b284d3795eb",
+      databaseURL:"https://darkline-x-fiesta-default-rtdb.firebaseio.com"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const ORDER = ['spectator','regular','vip','fullpack'];
+    let currentTicket = null;
+    let currentQty = 1;
+
+    // Live ticket listener
+    onValue(ref(db, 'tickets'), (snapshot) => {
+      const data = snapshot.val();
+      if (!data) { document.getElementById('ticketsGrid').innerHTML = '<div style="padding:3rem;color:var(--muted)">No tickets found. Admin: seed from admin panel.</div>'; return; }
+      const tickets = ORDER.map(id => ({ id, ...data[id] })).filter(t => t.name);
+      renderTickets(tickets);
+    });
+
+    function renderTickets(tickets) {
+      const grid = document.getElementById('ticketsGrid');
+      const isVipType = t => t.type === 'VIP' || t.type === 'Full Pack';
+      grid.innerHTML = tickets.map(t => {
+        const pct = Math.round((t.available / t.total) * 100);
+        const soldOut = t.available <= 0;
+        const low = pct <= 20 && !soldOut;
+        const perksObj = t.perks || {};
+        const perks = Object.values(perksObj).map(p => `<li>${p}</li>`).join('');
+        return `
+        <div class="ticket ${isVipType(t)?'vip':''} ${soldOut?'soldout':''}">
+          <div class="ticket-badge">${t.type}${isVipType(t)?' ✦':''}</div>
+          <div class="ticket-name">${t.name}</div>
+          <ul class="ticket-perks">${perks}</ul>
+          <div class="ticket-footer">
+            <div><div class="ticket-price-big">${t.price.toLocaleString()}</div><div class="ticket-price-sub">KSH per person</div></div>
+            <div class="ticket-spots">
+              ${soldOut ? '<span style="color:#ff4757">SOLD OUT</span>' : `${t.available}/${t.total} left`}
+              <div class="spots-bar"><div class="spots-fill ${low?'low':''}" style="width:${pct}%"></div></div>
+            </div>
+          </div>
+          <button class="btn-book" onclick="openBooking('${t.id}','${t.name.replace(/'/g,"\\'")}',${t.price},${t.available})" ${soldOut?'disabled':''}>
+            ${soldOut ? 'Sold Out' : '📱 Pay with M-Pesa'}
+          </button>
+        </div>`;
+      }).join('');
+    }
+
+    window.openBooking = function(id, name, price, available) {
+      currentTicket = { id, name, price, available };
+      currentQty = 1;
+      document.getElementById('modalTicketName').textContent = name;
+      document.getElementById('modalTicketPrice').textContent = `KSH ${price.toLocaleString()} per ticket`;
+      document.getElementById('qtyDisplay').textContent = 1;
+      document.getElementById('modalTotal').textContent = `KSH ${price.toLocaleString()}`;
+      document.getElementById('modalForm').style.display = 'block';
+      document.getElementById('modalSuccess').style.display = 'none';
+      document.getElementById("bookingFirstName").value = "";
+      document.getElementById("bookingLastName").value = "";
+      document.getElementById('bookingPhone').value = '';
+      const btn = document.getElementById('payBtn');
+      btn.textContent = 'Pay with M-Pesa 📱';
+      btn.disabled = false;
+      document.getElementById('modalOverlay').classList.add('open');
+    };
+
+    window.changeQty = function(delta) {
+      if (!currentTicket) return;
+      currentQty = Math.max(1, Math.min(currentTicket.available, currentQty + delta));
+      document.getElementById('qtyDisplay').textContent = currentQty;
+      document.getElementById('modalTotal').textContent = `KSH ${(currentTicket.price * currentQty).toLocaleString()}`;
+    };
+
+    window.confirmBooking = async function() {
+      const firstName = document.getElementById('bookingFirstName').value.trim();
+      const lastName = document.getElementById('bookingLastName').value.trim();
+      const name = firstName + ' ' + lastName;
+      const phone = document.getElementById('bookingPhone').value.trim();
+      if (!name) { alert('Please enter your name.'); return; }
+      if (!phone) { alert('Please enter your M-Pesa phone number.'); return; }
+
+      const btn = document.getElementById('payBtn');
+      btn.textContent = 'Sending M-Pesa prompt...';
+      btn.disabled = true;
+
+      try {
+        // 1. STK Push via server
+        const payRes = await fetch('http://localhost:3000/pay', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone, amount: currentTicket.price * currentQty, ticketName: currentTicket.name, customerName: name })
+        });
+        const payData = await payRes.json();
+        if (!payData.success) throw new Error(payData.error || 'STK Push failed');
+
+        // 2. Decrement ticket count
+        const ticketRef = ref(db, `tickets/${currentTicket.id}/available`);
+        const snap = await get(ticketRef);
+        const current = snap.val();
+        if (current < currentQty) { alert('Not enough tickets left!'); btn.textContent='Pay with M-Pesa 📱'; btn.disabled=false; return; }
+        await set(ticketRef, current - currentQty);
+
+        // 3. Save booking
+        await push(ref(db, 'bookings'), {
+          ticketId: currentTicket.id,
+          ticketName: currentTicket.name,
+          price: currentTicket.price,
+          quantity: currentQty,
+          total: currentTicket.price * currentQty,
+          customerName: name,
+          customerPhone: phone,
+          checkoutId: payData.checkoutId || '',
+          timestamp: new Date().toISOString(),
+          status: 'pending_mpesa'
+        });
+
+        // 4. Show success
+        document.getElementById('modalForm').style.display = 'none';
+        document.getElementById('modalSuccessText').innerHTML = `
+          M-Pesa prompt sent to <strong>${phone}</strong>.<br>
+          Enter your PIN to confirm.<br><br>
+          <strong>KSH ${(currentTicket.price * currentQty).toLocaleString()}</strong> · ${currentTicket.name}
+        `;
+        document.getElementById('modalSuccess').style.display = 'block';
+
+      } catch(err) {
+        // Fallback if server not running
+        if (err.message.includes('fetch') || err.message.includes('Failed')) {
+          try {
+            const ticketRef = ref(db, `tickets/${currentTicket.id}/available`);
+            const snap = await get(ticketRef);
+            await set(ticketRef, snap.val() - currentQty);
+            await push(ref(db, 'bookings'), {
+              ticketId: currentTicket.id, ticketName: currentTicket.name,
+              price: currentTicket.price, quantity: currentQty,
+              total: currentTicket.price * currentQty,
+              customerName: name, customerPhone: phone,
+              timestamp: new Date().toISOString(), status: 'reserved_no_payment'
+            });
+            document.getElementById('modalForm').style.display = 'none';
+            document.getElementById('modalSuccessText').innerHTML = `Spot reserved for <strong>${name}</strong>.<br>We'll contact <strong>${phone}</strong> to collect payment.<br><br><small style="color:#ff4757">Start server with: node server.js for M-Pesa</small>`;
+            document.getElementById('modalSuccess').style.display = 'block';
+          } catch(e2) { alert('Booking failed. Try again.'); btn.textContent='Pay with M-Pesa 📱'; btn.disabled=false; }
+        } else {
+          alert('Payment error: ' + err.message);
+          btn.textContent='Pay with M-Pesa 📱'; btn.disabled=false;
+        }
+      }
+    };
+
+    document.getElementById('modalClose').addEventListener('click', () => document.getElementById('modalOverlay').classList.remove('open'));
+    document.getElementById('modalOverlay').addEventListener('click', e => { if (e.target === document.getElementById('modalOverlay')) document.getElementById('modalOverlay').classList.remove('open'); });
+
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.style.background = window.scrollY > 60 ? 'rgba(6,6,6,0.97)' : 'rgba(6,6,6,0.85)'; });
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const ul = nav.querySelector('ul');
+      ul.style.cssText = ul.style.display === 'flex' ? '' : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:rgba(6,6,6,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(123,47,255,0.2);';
+    });
+    function updateCountdown() {
+      const diff = new Date('2026-08-15T12:00:00') - new Date();
+      if (diff <= 0) return;
+      document.getElementById('days').textContent = Math.floor(diff/86400000);
+      document.getElementById('hours').textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+      document.getElementById('mins').textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    }
+    updateCountdown(); setInterval(updateCountdown, 1000);
+    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; }); }, { threshold: 0.1 });
+    document.querySelectorAll('.animate').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+  </script>
+</body>
+</html>

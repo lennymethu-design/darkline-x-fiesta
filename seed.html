@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head><title>Seed Tickets</title></head>
+<body style="background:#060606;color:#f0f0f0;font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:1rem;">
+  <h2 style="font-size:2rem;">Seeding Tickets...</h2>
+  <p id="status" style="color:#888">Please wait...</p>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    const app = initializeApp({
+      apiKey:"AIzaSyAC2ctWv8fu06DNYFzeT76pote-KUFbxfA",
+      authDomain:"darkline-x-fiesta.firebaseapp.com",
+      projectId:"darkline-x-fiesta",
+      storageBucket:"darkline-x-fiesta.firebasestorage.app",
+      messagingSenderId:"22306597234",
+      appId:"1:22306597234:web:c11a440fff8b284d3795eb",
+      databaseURL:"https://darkline-x-fiesta-default-rtdb.firebaseio.com"
+    });
+    const db = getDatabase(app);
+    const tickets = {
+      spectator: {name:'Fiesta Spectator',type:'Individual',price:350,total:100,available:100,perks:{0:'Tournament access all day',1:'Cheer on your favourite team',2:'General seating area'}},
+      regular:   {name:'Darkline Regular',type:'Individual',price:800,total:150,available:150,perks:{0:'Afterparty entry from 8 PM',1:'Dance floor access',2:'Bar access'}},
+      vip:       {name:'Darkline V.I.P',type:'VIP',price:1500,total:40,available:40,perks:{0:'Panoramic rooftop access',1:'DJ booth proximity',2:'Reserved seating',3:'Exclusive pool table'}},
+      fullpack:  {name:'Full-Pack VIP',type:'Full Pack',price:1800,total:40,available:40,perks:{0:'Tournament + afterparty',1:'All VIP privileges',2:'Rooftop + reserved seating',3:'The complete experience'}}
+    };
+    try {
+      await set(ref(db, 'tickets'), tickets);
+      document.getElementById('status').textContent = '✅ ALL 4 TICKETS SEEDED! Go to events.html';
+      document.getElementById('status').style.color = '#00c896';
+    } catch(e) {
+      document.getElementById('status').textContent = '❌ Error: ' + e.message;
+      document.getElementById('status').style.color = '#ff4757';
+      console.error(e);
+    }
+  </script>
+</body>
+</html>
