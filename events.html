@@ -383,6 +383,21 @@
     let currentTicket = null;
     let currentQty = 1;
 
+
+    function getSokonetLink(name) {
+      const links = {
+        'Fiesta Teams':           'https://darkfiesta.soko.net/#:~:text=Football%20Team',
+        'Fiesta Spectator':       'https://darkfiesta.soko.net/#:~:text=Fiesta%20Spectator',
+        'Fiesta Team Substitute': 'https://darkfiesta.soko.net/#:~:text=Fiesta%20Substitute',
+        'Darkline Regular':       'https://darkfiesta.soko.net/#:~:text=Darkline%20Regular',
+        'Darkline V.I.P':         'https://darkfiesta.soko.net/#:~:text=Darkline%20V.I.P',
+        'Darkline 5Liners':       'https://darkfiesta.soko.net/#:~:text=Darkline%205Liners',
+        'Full-Pack Regular':      'https://darkfiesta.soko.net/#:~:text=All%20inclusive%20Regular',
+        'Full-Pack VIP':          'https://darkfiesta.soko.net/#:~:text=All%20inclusive%20VIP'
+      };
+      return links[name] || 'https://darkfiesta.soko.net';
+    }
+
     onValue(ref(db,'tickets'), (snapshot) => {
       const data = snapshot.val();
       if (!data) { document.getElementById('ticketsContainer').innerHTML = '<div style="padding:3rem;color:var(--muted)">No tickets found.</div>'; return; }
@@ -435,8 +450,8 @@
             <div class="spots-bar"><div class="spots-fill ${low?'low':''}" style="width:${pct}%"></div></div>
           </div>
         </div>
-        <button class="btn-book" onclick="openBooking('${id}','${t.name}',${t.price},${t.available},${isBundle},${t.ticketsPerBundle||1})" ${soldOut?'disabled':''}>
-          ${soldOut ? 'Sold Out' : '📱 Pay with M-Pesa'}
+        <button class="btn-book" onclick="if(!this.disabled) window.open(getSokonetLink('${t.name}'), '_blank')" ${soldOut?'disabled':''}>
+          ${soldOut ? 'Sold Out' : '🎟️ Buy on Sokonet'}
         </button>
       </div>`;
     }
