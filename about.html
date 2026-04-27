@@ -1,169 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — DARKLINE X FIESTA</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — DARKLINE X FIESTA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --purple: #8B5CF6; --purple-mid: #6D28D9; --purple-dim: #4C1D95;
+      --red: #CC1111; --red-bright: #E8211A; --red-dim: #8B0000;
+      --black: #04040A; --black2: #080812; --white: #F0EEF5; --muted: #7a7888; --nav-h: 72px;
+      --brand-gradient: linear-gradient(90deg, var(--red-bright), var(--purple));
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(204,17,17,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(109,40,217,0.025) 1px, transparent 1px); background-size: 80px 80px; pointer-events: none; z-index: 0; }
+    body > * { position: relative; z-index: 1; }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; z-index: 100; background: rgba(4,4,10,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(139,92,246,0.2); transition: background 0.3s; }
+    nav::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--brand-gradient); opacity: 0.5; }
+    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+    .nav-wordmark { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.12em; color: var(--white); line-height: 1; }
+    .nav-wordmark .brand-dark { color: var(--purple); }
+    .nav-wordmark .brand-fiesta { color: var(--red-bright); }
+    nav ul { list-style: none; display: flex; gap: 2.5rem; }
+    nav ul a { text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; position: relative; }
+    nav ul a::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--brand-gradient); transform: scaleX(0); transition: transform 0.25s; }
+    nav ul a:hover, nav ul a.active { color: var(--white); }
+    nav ul a:hover::after, nav ul a.active::after { transform: scaleX(1); }
+    .nav-cta { background: var(--red) !important; color: #fff !important; padding: 0.45rem 1.25rem; border-radius: 2px; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: var(--red-dim) !important; color: #fff !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 1px; background: var(--white); }
 
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+    .page-header { padding: var(--nav-h) 3rem 4rem; position: relative; overflow: hidden; }
+    .page-header::before { content: ''; position: absolute; inset: 0; background:
+      radial-gradient(ellipse 60% 100% at 0% 50%, rgba(139,8,0,0.3) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 80% at 100% 30%, rgba(109,40,217,0.2) 0%, transparent 65%); }
+    .page-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: var(--brand-gradient); opacity: 0.35; }
+    .page-header-inner { position: relative; z-index: 1; padding-top: 3rem; }
+    .page-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.8rem; }
+    .page-label::before { content: ''; width: 40px; height: 1px; background: var(--brand-gradient); }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem); line-height: 0.92; letter-spacing: 0.03em; }
+    .page-header h1 .word-about { color: var(--red-bright); text-shadow: 0 0 60px rgba(204,17,17,0.5); }
+    .page-header h1 .word-us { color: var(--purple); text-shadow: 0 0 60px rgba(139,92,246,0.5); }
+    .page-header p { margin-top: 1.2rem; color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 500px; }
 
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    /* STORY */
+    .story { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(139,92,246,0.1); }
+    .story-text { padding: 5rem 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+    .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-label::before { content: ''; width: 40px; height: 1px; background: var(--brand-gradient); }
+    .story-text h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; margin-bottom: 1.5rem; letter-spacing: 0.04em; }
+    .story-text h2 .hl-dark { color: var(--purple); }
+    .story-text h2 .hl-fiesta { color: var(--red-bright); }
+    .story-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.8; max-width: 420px; margin-bottom: 1.2rem; }
+    .story-visual { background: linear-gradient(135deg, rgba(139,8,0,0.15), rgba(109,40,217,0.12)), var(--black2); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; min-height: 480px; }
+    .big-logo { font-family: 'Bebas Neue', sans-serif; font-size: 7rem; color: rgba(255,255,255,0.03); user-select: none; line-height: 1; text-align: center; }
+    .logo-overlay { position: absolute; text-align: center; }
+    .logo-overlay .brand-big { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.08em; }
+    .logo-overlay .brand-big .hl-dark { color: var(--purple); }
+    .logo-overlay .brand-big .hl-fiesta { color: var(--red-bright); }
 
-:root{
-  --purple:#8B5CF6;
-  --purple-mid:#6D28D9;
-  --purple-dim:#4C1D95;
-  --red:#CC1111;
-  --red-bright:#E8211A;
-  --black:#04040A;
-  --black2:#080812;
-  --white:#F0EEF5;
-  --muted:#7a7888;
-  --nav-h:72px;
-  --brand-gradient:linear-gradient(90deg,var(--red-bright),var(--purple));
-}
+    /* VALUES */
+    .values { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(139,92,246,0.06); border-top: 1px solid rgba(139,92,246,0.06); border-bottom: 1px solid rgba(139,92,246,0.06); }
+    .value-card { background: var(--black2); padding: 3rem 2.5rem; position: relative; overflow: hidden; transition: background 0.25s; }
+    .value-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--brand-gradient); transform: scaleX(0); transition: transform 0.3s; transform-origin: left; }
+    .value-card:hover { background: #0d0d1a; }
+    .value-card:hover::after { transform: scaleX(1); }
+    .value-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(139,92,246,0.12); line-height: 1; margin-bottom: 1rem; }
+    .value-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; margin-bottom: 0.8rem; }
+    .value-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
 
-body{
-  background:var(--black);
-  color:var(--white);
-  font-family:'Barlow',sans-serif;
-}
+    /* BRANDS */
+    .brands { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(139,92,246,0.1); }
+    .brand { padding: 4rem 3rem; position: relative; overflow: hidden; }
+    .brand:first-child { border-right: 1px solid rgba(204,17,17,0.1); }
+    .brand::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+    .brand.brand-darkline::before { background: var(--purple); }
+    .brand.brand-fiesta::before { background: var(--red-bright); }
+    .brand-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1rem; }
+    .brand.brand-darkline .brand-tag { color: var(--purple); }
+    .brand.brand-fiesta .brand-tag { color: var(--red-bright); }
+    .brand h3 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 3vw, 2.5rem); letter-spacing: 0.04em; margin-bottom: 1rem; }
+    .brand p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; max-width: 380px; }
 
-/* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;background:rgba(4,4,10,0.9);
-  backdrop-filter:blur(16px);
-}
-nav ul{display:flex;gap:2rem;list-style:none;}
-nav a{color:var(--muted);text-decoration:none;font-family:'Barlow Condensed';letter-spacing:.2em;}
-nav a:hover, nav a.active{color:var(--white);}
-.nav-cta{background:var(--red);color:#fff;padding:.4rem 1rem;}
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .stat { padding: 3rem 2.5rem; border-right: 1px solid rgba(255,255,255,0.04); text-align: center; }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1; background: var(--brand-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 0.3rem; }
 
-/* HEADER */
-.page-header{
-  padding:var(--nav-h) 3rem 4rem;
-}
-.page-label{
-  font-family:'Barlow Condensed';
-  letter-spacing:.35em;
-  color:var(--purple);
-  display:flex;gap:.6rem;align-items:center;
-}
-.page-label::before{
-  content:'';width:40px;height:1px;background:var(--brand-gradient);
-}
-h1{
-  font-family:'Bebas Neue';
-  font-size:5rem;
-}
-.word-about{color:var(--red-bright);}
-.word-us{color:var(--purple);}
-.page-header p{color:var(--muted);max-width:500px;}
+    /* CTA */
+    .cta { padding: 5rem 3rem; text-align: center; position: relative; overflow: hidden; }
+    .cta::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 80% at 50% 50%, rgba(139,8,0,0.08) 0%, transparent 70%); }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 0.04em; margin-bottom: 1rem; }
+    .cta h2 .hl-dark { color: var(--purple); }
+    .cta h2 .hl-fiesta { color: var(--red-bright); }
+    .cta p { color: var(--muted); font-size: 0.95rem; margin-bottom: 2.5rem; }
+    .btn-primary { display: inline-block; background: var(--brand-gradient); color: #fff; text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 0.9rem 2.2rem; border-radius: 2px; transition: opacity 0.2s, transform 0.15s; border: none; cursor: pointer; }
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
 
-/* CONTENT */
-.section{
-  padding:4rem 3rem;
-  border-bottom:1px solid rgba(139,92,246,0.1);
-}
-
-.section-label{
-  font-family:'Barlow Condensed';
-  letter-spacing:.3em;
-  color:var(--purple);
-  display:flex;gap:.6rem;align-items:center;
-  margin-bottom:1rem;
-}
-.section-label::before{
-  content:'';width:40px;height:1px;background:var(--brand-gradient);
-}
-
-.text{
-  max-width:700px;
-  line-height:1.8;
-  color:var(--muted);
-}
-
-/* VALUES */
-.values{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-}
-.value{
-  padding:2rem;
-  background:var(--black2);
-  border:1px solid rgba(139,92,246,0.1);
-}
-
-/* JOIN */
-.join-section{
-  margin:3rem;
-  padding:3rem;
-  background:var(--black2);
-  border-left:4px solid;
-  border-image:var(--brand-gradient) 1;
-}
-.join-section h2{
-  font-family:'Bebas Neue';
-  font-size:2.5rem;
-}
-.hl-dark{color:var(--purple);}
-.hl-fiesta{color:var(--red-bright);}
-
-/* FOOTER */
-footer{
-  padding:2rem 3rem;
-  display:flex;justify-content:space-between;
-  border-top:1px solid rgba(255,255,255,0.05);
-}
-</style>
+    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; position: relative; }
+    footer::before { content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--brand-gradient); opacity: 0.3; }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.1em; }
+    .footer-logo .brand-dark { color: var(--purple); }
+    .footer-logo .brand-fiesta { color: var(--red-bright); }
+    footer p { font-size: 0.78rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate { opacity: 0; animation: fadeUp 0.6s forwards; }
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; } nav ul { display: none; } .hamburger { display: flex; }
+      .page-header { padding: var(--nav-h) 1.5rem 3rem; }
+      .story { grid-template-columns: 1fr; } .story-visual { min-height: 260px; } .story-text { padding: 3rem 1.5rem; }
+      .values { grid-template-columns: 1fr; } .brands { grid-template-columns: 1fr; }
+      .brand:first-child { border-right: none; border-bottom: 1px solid rgba(204,17,17,0.1); } .brand { padding: 3rem 1.5rem; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); } .stat:nth-child(2) { border-right: none; }
+      .cta { padding: 4rem 1.5rem; }
+      footer { flex-direction: column; gap: 1.5rem; text-align: center; } .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
 </head>
-
 <body>
+  <nav id="navbar">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-wordmark"><span class="brand-dark">DARKLINE</span> <span style="color:var(--white)">×</span> <span class="brand-fiesta">FIESTA</span></span>
+    </a>
+    <ul>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="team.html">Team</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contacts.html">Contact</a></li>
+      <li><a href="https://darkfiesta.soko.net" target="_blank" class="nav-cta">Get Tickets</a></li>
+    </ul>
+    <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
+  </nav>
 
-<nav>
-  <div>DARKLINE × FIESTA</div>
-  <ul>
-    <li><a href="events.html">Events</a></li>
-    <li><a href="team.html">Team</a></li>
-    <li><a href="about.html" class="active">About</a></li>
-    <li><a href="contacts.html">Contact</a></li>
-    <li><a href="#" class="nav-cta">Tickets</a></li>
-  </ul>
-</nav>
+  <div class="page-header">
+    <div class="page-header-inner">
+      <div class="page-label">Our Story</div>
+      <h1><span class="word-about">ABOUT</span><br><span class="word-us">US</span></h1>
+      <p>Two brands. One shared obsession with creating unforgettable experiences in Nairobi.</p>
+    </div>
+  </div>
 
-<div class="page-header">
-  <div class="page-label">Our Story</div>
-  <h1><span class="word-about">ABOUT</span><br><span class="word-us">US</span></h1>
-  <p>Two brands. One shared obsession with creating unforgettable experiences in Nairobi.</p>
-</div>
+  <section class="story">
+    <div class="story-text animate" style="animation-delay:0.1s">
+      <div class="section-label">Where It Started</div>
+      <h2>BUILT FOR<br><span class="hl-fiesta">THE</span> <span class="hl-dark">CITY.</span></h2>
+      <p>Darkline Party started with a simple idea — Nairobi deserves better nights. Not just parties, but experiences. Rooftop sessions, curated sounds, and a crowd that actually cares about the vibe.</p>
+      <p>Footwork Fiesta came from the same energy — grassroots football with a competitive edge and a community at its core. Real teams. Real stakes. Real Nairobi.</p>
+      <p>In 2026, the two worlds collide for the first time. One venue. One day. Two experiences that define what this city is capable of.</p>
+    </div>
+    <div class="story-visual">
+      <div class="big-logo">DL×F</div>
+      <div class="logo-overlay">
+        <div class="brand-big"><span class="hl-dark">DARK</span>LINE × <span class="hl-fiesta">FIESTA</span></div>
+      </div>
+    </div>
+  </section>
 
-<div class="section">
-  <div class="section-label">Where It Started</div>
-  <p class="text">
-    DARKLINE × FIESTA was built to redefine nightlife and culture in Nairobi.
-    We combine music, sport, and community into one powerful experience.
-  </p>
-</div>
+  <div class="values">
+    <div class="value-card animate" style="animation-delay:0.1s">
+      <div class="value-num">01</div>
+      <div class="value-title">Community First</div>
+      <div class="value-desc">Everything we build is for Nairobi. Local teams, local DJs, local energy. We amplify what's already here.</div>
+    </div>
+    <div class="value-card animate" style="animation-delay:0.2s">
+      <div class="value-num">02</div>
+      <div class="value-title">Details Matter</div>
+      <div class="value-desc">From the bracket system to the booth placement — every detail is deliberate. We obsess so you don't have to.</div>
+    </div>
+    <div class="value-card animate" style="animation-delay:0.3s">
+      <div class="value-num">03</div>
+      <div class="value-title">One Night Only</div>
+      <div class="value-desc">Scarcity is intentional. We don't repeat. We refine. Each event is a singular moment in time.</div>
+    </div>
+  </div>
 
-<div class="values">
-  <div class="value">Community First</div>
-  <div class="value">Details Matter</div>
-  <div class="value">One Night Only</div>
-</div>
+  <div class="brands">
+    <div class="brand brand-darkline animate" style="animation-delay:0.1s">
+      <div class="brand-tag">Brand 01 — Nightlife</div>
+      <h3>DARKLINE PARTY</h3>
+      <p>Nairobi's underground nightlife collective. We've been crafting rooftop experiences, curating sounds, and building a community of people who take the night seriously. Darkline isn't just a party — it's a standard.</p>
+    </div>
+    <div class="brand brand-fiesta animate" style="animation-delay:0.2s">
+      <div class="brand-tag">Brand 02 — Sport</div>
+      <h3>FOOTWORK FIESTA</h3>
+      <p>Nairobi's grassroots football tournament. Competitive brackets, real teams, and an atmosphere that turns a pitch into a stadium. Footwork Fiesta is where the city's best lace up and prove themselves.</p>
+    </div>
+  </div>
 
-<div class="join-section">
-  <h2><span class="hl-dark">DARK</span><span class="hl-fiesta">LINE</span> NIGHT IS COMING</h2>
-  <p>15 August 2026 — Arena One</p>
-  <button class="btn-primary">Get Tickets</button>
-</div>
+  <div class="stats-row">
+    <div class="stat animate" style="animation-delay:0.1s"><div class="stat-num">600+</div><div class="stat-label">Expected Attendees</div></div>
+    <div class="stat animate" style="animation-delay:0.15s"><div class="stat-num">2</div><div class="stat-label">Brands Colliding</div></div>
+    <div class="stat animate" style="animation-delay:0.2s"><div class="stat-num">1</div><div class="stat-label">Night Only</div></div>
+    <div class="stat animate" style="animation-delay:0.25s"><div class="stat-num">15.08</div><div class="stat-label">Event Date 2026</div></div>
+  </div>
 
-<footer>
-  <div>DARKLINE × FIESTA</div>
-  <p>© 2026 Darkline</p>
-</footer>
+  <div class="cta">
+    <div class="cta-inner">
+      <div class="section-label" style="justify-content:center;margin-bottom:1rem;">Join Us</div>
+      <h2>BE PART OF<br><span class="hl-fiesta">THE</span> <span class="hl-dark">NIGHT.</span></h2>
+      <p>Tickets are limited. The experience is not.</p>
+      <a href="https://darkfiesta.soko.net" target="_blank" class="btn-primary">Get Tickets on Sokonet</a>
+    </div>
+  </div>
 
+  <footer>
+    <div class="footer-logo"><span class="brand-dark">DARK</span><span style="color:var(--white)">LINE</span> × <span class="brand-fiesta">FIESTA</span></div>
+    <p>© 2026 Darkline. All rights reserved.</p>
+    <nav class="footer-links">
+      <a href="events.html">Events</a><a href="team.html">Team</a><a href="about.html">About</a><a href="contacts.html">Contact</a>
+    </nav>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => { nav.style.background = window.scrollY > 60 ? 'rgba(4,4,10,0.97)' : 'rgba(4,4,10,0.9)'; });
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      const ul = nav.querySelector('ul');
+      ul.style.cssText = ul.style.display === 'flex' ? '' : 'display:flex;flex-direction:column;position:fixed;top:72px;left:0;right:0;background:rgba(4,4,10,0.97);padding:2rem;gap:1.5rem;border-bottom:1px solid rgba(139,92,246,0.2);';
+    });
+    const observer = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; }); }, { threshold: 0.1 });
+    document.querySelectorAll('.animate').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+  </script>
 </body>
 </html>
