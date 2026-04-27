@@ -5,7 +5,7 @@ const CONSUMER_KEY = 'RIMCb963QAxBdgGPSCrheRd8QuAS54QVPvzNSnpjQAlGyuTW';
 const CONSUMER_SECRET = 'Wol8ulzxYeHgAYINqgXbA52o6IMnoyX1Zk29TDMg5DFhFOoWR1GMZqybFPQSpXqC';
 const SHORTCODE = '174379';
 const PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
-const CALLBACK_URL = 'https://darkline-fiesta.requestcatcher.com/callback';
+const CALLBACK_URL = 'https://darkline-x-fiesta-production.up.railway.app/mpesa/callback';
 
 // Get access token
 async function getToken() {

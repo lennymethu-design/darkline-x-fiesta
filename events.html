@@ -477,7 +477,7 @@
       btn.disabled = true;
       const total = currentTicket.price * currentQty;
       try {
-        const payRes = await fetch('http://localhost:3000/pay', {
+        const payRes = await fetch('https://darkline-x-fiesta-production.up.railway.app/pay', {
           method:'POST', headers:{'Content-Type':'application/json'},
           body: JSON.stringify({ phone, amount: total, ticketName: currentTicket.name, customerName: name })
         });
