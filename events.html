@@ -251,7 +251,7 @@
       <li><a href="team.html">Team</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contacts.html">Contact</a></li>
-      <li><a href="events.html" class="nav-cta">Get Tickets</a></li>
+      <li><a href="https://darkfiesta.soko.net" target="_blank" class="nav-cta">Get Tickets</a></li>
     </ul>
     <button class="hamburger" id="menuBtn"><span></span><span></span><span></span></button>
   </nav>
@@ -547,4 +547,12 @@
     document.querySelectorAll('.animate').forEach(el => { el.style.animationPlayState='paused'; observer.observe(el); });
   </script>
 </body>
-</html>
+</html><script>
+// Override all book buttons to go to Sokonet
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.btn-book:not([disabled])').forEach(btn => {
+    btn.textContent = '🎟️ Buy on Sokonet';
+    btn.onclick = () => window.open('https://darkfiesta.soko.net', '_blank');
+  });
+});
+</script>
