@@ -18,20 +18,98 @@
     });
     const db = getDatabase(app);
     const tickets = {
-      spectator: {name:'Fiesta Spectator',type:'Individual',price:350,total:100,available:100,perks:{0:'Tournament access all day',1:'Cheer on your favourite team',2:'General seating area'}},
-      regular:   {name:'Darkline Regular',type:'Individual',price:800,total:150,available:150,perks:{0:'Afterparty entry from 8 PM',1:'Dance floor access',2:'Bar access'}},
-      vip:       {name:'Darkline V.I.P',type:'VIP',price:1500,total:40,available:40,perks:{0:'Panoramic rooftop access',1:'DJ booth proximity',2:'Reserved seating',3:'Exclusive pool table'}},
-      fullpack:  {name:'Full-Pack VIP',type:'Full Pack',price:1800,total:40,available:40,perks:{0:'Tournament + afterparty',1:'All VIP privileges',2:'Rooftop + reserved seating',3:'The complete experience'}}
+      fiesta_teams: {
+        name:'Fiesta Teams',
+        type:'Group Bundle',
+        bundle: true,
+        ticketsPerBundle: 8,
+        price: 4000,
+        total: 20,
+        available: 20,
+        description: 'Secure a ticket for registering 8 of your team members into competing for the winning prize',
+        perks:{0:'8 tickets per bundle',1:'Team competition entry',2:'Compete for the winning prize',3:'Full tournament access'}
+      },
+      fiesta_spectator: {
+        name:'Fiesta Spectator',
+        type:'Individual',
+        bundle: false,
+        price: 350,
+        total: 100,
+        available: 99,
+        description: 'Watch the Tournament as a Spectator. Cheer on your favorite team as they play their way to the top',
+        perks:{0:'Tournament access all day',1:'Cheer on your favourite team',2:'General seating area'}
+      },
+      fiesta_substitute: {
+        name:'Fiesta Team Substitute',
+        type:'Individual',
+        bundle: false,
+        price: 500,
+        total: 50,
+        available: 50,
+        description: 'Required if the teams participating carry along substitutes with them, each ticket for each head',
+        perks:{0:'Substitute player entry',1:'Full tournament access',2:'One ticket per substitute'}
+      },
+      darkline_regular: {
+        name:'Darkline Regular',
+        type:'Individual',
+        bundle: false,
+        price: 800,
+        total: 150,
+        available: 148,
+        description: 'Turned up for the after party? Get in and experience the night!',
+        perks:{0:'Afterparty entry from 8 PM',1:'Dance floor access',2:'Bar access'}
+      },
+      darkline_vip: {
+        name:'Darkline V.I.P',
+        type:'Individual',
+        bundle: false,
+        price: 1500,
+        total: 40,
+        available: 40,
+        description: 'For those of higher standards and more class',
+        perks:{0:'Panoramic rooftop & turf views',1:'Exclusive DJ booth access',2:'Reserved VIP seating',3:'Phone charging ports',4:'Exclusive VIP security',5:'Private party vibes',6:'Exclusive pool table'}
+      },
+      darkline_5liners: {
+        name:'Darkline 5Liners',
+        type:'Group Bundle',
+        bundle: true,
+        ticketsPerBundle: 5,
+        price: 3500,
+        total: 28,
+        available: 28,
+        description: 'Gang gang for 600 bob each!!',
+        perks:{0:'5 tickets per bundle',1:'600 KSH per person',2:'Afterparty entry',3:'Dance floor access'}
+      },
+      fullpack_regular: {
+        name:'Full-Pack Regular',
+        type:'Individual',
+        bundle: false,
+        price: 1100,
+        total: 100,
+        available: 100,
+        description: 'Full-day attendance! Get onboard for the tournament and the afterparty!',
+        perks:{0:'Tournament access all day',1:'Afterparty entry from 8 PM',2:'Dance floor access',3:'Bar access'}
+      },
+      fullpack_vip: {
+        name:'Full-Pack VIP',
+        type:'Individual',
+        bundle: false,
+        price: 1800,
+        total: 40,
+        available: 40,
+        description: 'Watching the tournament awaiting VIP treatment in the afterparty? This one is for you!',
+        perks:{0:'Full tournament access',1:'Panoramic rooftop access',2:'Reserved VIP seating',3:'Exclusive pool table',4:'Private party vibes'}
+      }
     };
-    try {
-      await set(ref(db, 'tickets'), tickets);
-      document.getElementById('status').textContent = '✅ ALL 4 TICKETS SEEDED! Go to events.html';
-      document.getElementById('status').style.color = '#00c896';
-    } catch(e) {
-      document.getElementById('status').textContent = '❌ Error: ' + e.message;
-      document.getElementById('status').style.color = '#ff4757';
-      console.error(e);
-    }
+    set(ref(db,'tickets'), tickets)
+      .then(()=>{
+        document.getElementById('status').textContent = '✅ ALL 8 TICKETS SEEDED!';
+        document.getElementById('status').style.color = '#00c896';
+      })
+      .catch(e=>{
+        document.getElementById('status').textContent = '❌ Error: ' + e.message;
+        document.getElementById('status').style.color = '#ff4757';
+      });
   </script>
 </body>
 </html>
